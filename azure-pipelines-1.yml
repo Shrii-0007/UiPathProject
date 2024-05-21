@@ -34,7 +34,3 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
-# Move the CancelTimeoutInMinutes and Expand properties outside of the steps block
-CancelTimeoutInMinutes: 5
-Expand:
-  MaxConcurrency: 0
