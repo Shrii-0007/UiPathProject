@@ -21,16 +21,17 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
+# Pack the UiPath project
 - task: UiPathPack@4
   inputs:
     versionType: 'AutoVersion'
     projectJsonPath: '$(Build.SourcesDirectory)'
-    orchestratorConnection: 'UiPath_Seervice_connection'
+    orchestratorConnection: 'UiPath_Seervice_connection' 
     outputPath: '$(Build.ArtifactStagingDirectory)\Output'
 
+# Publish the build artifacts
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-
