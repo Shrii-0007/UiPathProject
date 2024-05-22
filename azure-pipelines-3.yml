@@ -8,7 +8,7 @@ pool:
 variables:
   uipathProjectJsonPath: 'project.json'
   uipathPackageName: 'MyUiPathPackage'
-  uipathPackageVersion: '1.0.0'
+  uipathPackageVersion: '2.0.0'
 
 steps:
 - task: UseDotNet@2
