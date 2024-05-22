@@ -1,0 +1,22 @@
+trigger:
+- main
+
+pool:
+  name: Default
+  demands: npm
+
+- task: UiPathPack@4
+  displayName: 'UiPath Pack'
+  inputs:
+    versionType: 'AutoVersion'
+    projectJsonPath: '$(Build.SourcesDirectory)'
+	outputType: Process
+    splitOutput: false
+    orchestratorConnection: 'UiPath_Seervice_connection'
+    outputPath: '$(Build.ArtifactStagingDirectory)\Output'
+	
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
