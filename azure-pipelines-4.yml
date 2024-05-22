@@ -1,0 +1,26 @@
+trigger:
+- main
+
+pool:
+  name: 'Default'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+- task: Npm@1
+  inputs:
+    command: 'install'
+
+
+- task: UiPathPack@4
+  inputs:
+    versionType: 'AutoVersion'
+    projectJsonPath: '$(Build.SourcesDirectory)'
+    orchestratorConnection: 'UiPath_Seervice_connection'
+    outputPath: '$(Build.ArtifactStagingDirectory)\Output'
+	
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
