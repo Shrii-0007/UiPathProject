@@ -28,7 +28,7 @@ steps:
   inputs:
     versionType: 'AutoVersion'
     projectJsonPath: '$(Build.SourcesDirectory)'
-    orchestratorConnection: 'UiPath_Seervice_connection'
+    orchestratorConnection: 'UiPath_SC'
     outputPath: '$(Build.ArtifactStagingDirectory)\Output'
 - task: PublishBuildArtifacts@1
   inputs:
