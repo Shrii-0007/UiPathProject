@@ -11,6 +11,7 @@ pool:
   demands: 
    - npm
    - Agent.Version -equals 2.144.0
+   - Agent.Version -gtVersion 2.163.1
 
 
 steps:
