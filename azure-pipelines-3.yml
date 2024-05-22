@@ -1,0 +1,29 @@
+
+trigger:
+- main
+
+pool:
+  name: 'Default'
+
+variables:
+  uipathProjectJsonPath: 'project.json'
+  uipathPackageName: 'MyUiPathPackage'
+  uipathPackageVersion: '1.0.0'
+
+steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '5.x'
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- task: UiPathPack@2
+  inputs:
+    projectJsonPath: '$(Build.SourcesDirectory)/$(uipathProjectJsonPath)'
+    outputFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    artifact: 'drop'
+    publishLocation: 'pipeline'
