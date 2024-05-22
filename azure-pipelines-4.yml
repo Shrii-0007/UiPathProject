@@ -2,14 +2,11 @@ trigger:
 - main
 
 pool:
-  name: 'Default'
+  vmImage: 'windows-latest'
 
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-- task: Npm@1
-  inputs:
-    command: 'install'
 
 - task: UiPathPack@4
   inputs:
