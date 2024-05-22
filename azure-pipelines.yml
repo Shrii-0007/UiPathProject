@@ -16,9 +16,12 @@ steps:
   displayName: 'Run a one-line script'
 
 - task: UiPathPack@4
+  displayName: UiPath Pack
   inputs:
     versionType: 'AutoVersion'
     projectJsonPath: '$(Build.SourcesDirectory)'
+    outputType: Process
+    splitOutput: false
     orchestratorConnection: 'UiPath_SC'
     outputPath: '$(Build.ArtifactStagingDirectory)\Output'
 - task: PublishBuildArtifacts@1
