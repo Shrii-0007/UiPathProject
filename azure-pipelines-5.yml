@@ -1,0 +1,20 @@
+pool:
+  name: Default
+  demands: npm
+
+steps:
+- task: uipath.vsts-uipath-package.uipath-pack.UiPathPack@4
+  displayName: 'UiPath Pack'
+  inputs:
+    versionType: AutoVersion
+    projectJsonPath: project.json
+    outputType: Process
+    splitOutput: false
+    orchestratorConnection: Azure_CICD
+
+- task: uipath.vsts-uipath-package.uipath-deploy.UiPathDeploy@4
+  displayName: 'UiPath Deploy'
+  inputs:
+    orchestratorConnection: Azure_CICD
+    packagesPath: '$(Build.ArtifactStagingDirectory)\Output'
+    folderName: Shared
