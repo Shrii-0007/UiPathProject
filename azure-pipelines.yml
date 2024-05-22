@@ -8,7 +8,9 @@ trigger:
 
 pool:
   name: default
-  demands: Agent.Version -equals 2.144.0
+  demands: 
+   - npm
+   - Agent.Version -equals 2.144.0
 
 
 steps:
