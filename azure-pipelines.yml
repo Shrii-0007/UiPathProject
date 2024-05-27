@@ -4,23 +4,20 @@ trigger:
 pool:
   name: 'Default'
 
-variables:
-  buildConfiguration: 'Release'
-  uipathProjectName: 'UiPath Orchestration'
-  uipathPackageName: '$(uipathProjectName).$(Build.BuildId).nupkg'
-  uipathProjectPath: '$(Build.SourcesDirectory)/src/UiPath Orchestration'
-
-steps:
-- task: UiPathPack@2
-  displayName: 'Pack UiPath Project'
+- task: UiPathInstallPlatform@4
   inputs:
-    projectPath: '$(uipathProjectPath)'
-    outputType: 'NuGet'
-    outputName: '$(uipathPackageName)'
+    cliVersion: 'WIN_23.10.8894.39673'
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: UiPathPackage'
+- task: UiPathAssets@4
   inputs:
-    pathToPublish: '$(Build.SourcesDirectory)/$(uipathPackageName)'
-    artifactName: 'UiPathPackage'
+    orchestratorConnection: 'UiPath_Service_Connection_007'
+    folderName: 'New'
+    assetActionType: 'Deploy'
+
+- task: UiPathPack@4
+  inputs:
+    versionType: 'AutoVersion'
+    projectJsonPath: '$(Build.SourcesDirectory)'
+    orchestratorConnection: 'UiPath_Service_Connection_007'
+    outputPath: '$(Build.ArtifactStagingDirectory)\Output'
 
