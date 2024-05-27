@@ -1,34 +1,26 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
 pool:
-  name: default
-  demands: 
-   - npm
-   - Agent.Version -equals 2.144.0
-   - Agent.Version -gtVersion 2.163.1
+  name: 'Default'
 
+variables:
+  buildConfiguration: 'Release'
+  uipathProjectName: 'UiPath Orchestration'
+  uipathPackageName: '$(uipathProjectName).$(Build.BuildId).nupkg'
+  uipathProjectPath: '$(Build.SourcesDirectory)/src/UiPath Orchestration'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: UiPathPack@2
+  displayName: 'Pack UiPath Project'
+  inputs:
+    projectPath: '$(uipathProjectPath)'
+    outputType: 'NuGet'
+    outputName: '$(uipathPackageName)'
 
-- task: UiPathPack@4
-  displayName: UiPath Pack
-  inputs:
-    versionType: 'AutoVersion'
-    projectJsonPath: '$(Build.SourcesDirectory)'
-    outputType: Process
-    splitOutput: false
-    orchestratorConnection: 'UiPath_SC'
-    outputPath: '$(Build.ArtifactStagingDirectory)\Output'
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: UiPathPackage'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+    pathToPublish: '$(Build.SourcesDirectory)/$(uipathPackageName)'
+    artifactName: 'UiPathPackage'
+
